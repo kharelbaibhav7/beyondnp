@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
-import Collection from "../models/Collection.js";
-import Note from "../models/Note.js";
+import Collection from "../model/collectionSchema.js";
+import Note from "../model/noteSchema.js";
 
 // @desc    Get all collections for a user
 // @route   GET /api/collections
@@ -168,4 +168,3 @@ export const getCollectionById = asyncHandler(async (req, res) => {
     },
   });
 });
- 

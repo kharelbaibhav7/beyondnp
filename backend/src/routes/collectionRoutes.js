@@ -7,7 +7,7 @@ import {
   updateCollection,
   deleteCollection,
   getCollectionById,
-} from "../controllers/collectionController.js";
+} from "../controller/collectionController.js";
 
 const router = express.Router();
 

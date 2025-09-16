@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
-import Note from "../models/Note.js";
-import Collection from "../models/Collection.js";
+import Note from "../model/noteSchema.js";
+import Collection from "../model/collectionSchema.js";
 
 // @desc    Get all notes in a collection
 // @route   GET /api/notes
@@ -223,4 +223,3 @@ export const searchNotes = asyncHandler(async (req, res) => {
     data: notes,
   });
 });
- 
