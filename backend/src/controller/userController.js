@@ -89,10 +89,34 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (user && (await user.comparePassword(password))) {
     // Check if email is verified
     if (!user.isEmailVerified) {
-      res.status(403);
-      throw new Error(
-        "Please verify your email before logging in. Check your inbox for verification code."
+      // Generate new verification code and send email
+      const verificationCode = generateVerificationCode();
+      user.emailVerificationCode = verificationCode;
+      user.emailVerificationExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+      await user.save();
+
+      // Send verification email
+      const emailResult = await sendVerificationEmail(
+        email,
+        verificationCode,
+        user.name
       );
+
+      if (!emailResult.success) {
+        console.error("Failed to send verification email:", emailResult.error);
+      }
+
+      res.status(403).json({
+        success: false,
+        message:
+          "Please verify your email before logging in. A new verification code has been sent to your email.",
+        requiresVerification: true,
+        data: {
+          email: user.email,
+          name: user.name,
+        },
+      });
+      return;
     }
 
     // Update last login

@@ -52,7 +52,7 @@ const Navbar = () => {
                         className="flex-shrink-0"
                     >
                         <Link to="/" className="flex items-center space-x-3">
-                            <img src={logo} alt="Beyond NP Logo" className="w-10 h-10" />
+                            <img src={logo} alt="Beyond NP Logo" className="w-14 h-14 rounded-lg" />
                             <span className="text-2xl font-bold text-gray-900">Beyond NP</span>
                         </Link>
                     </motion.div>

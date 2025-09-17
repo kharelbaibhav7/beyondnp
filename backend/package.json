@@ -1,0 +1,31 @@
+{
+  "name": "beyondnp-backend",
+  "version": "1.0.0",
+  "description": "Backend API for BeyondNP - Nepalese students US university application platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "mongoose": "^8.0.3",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.7",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "api",
+    "nepal",
+    "education",
+    "university"
+  ],
+  "author": "BeyondNP Team",
+  "license": "MIT"
+}
+

@@ -1,78 +1,87 @@
 import React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import HomePage from '../page/homePage/HomePage';
 
+// Account Components
+import Login from '../page/account/Login';
+import SignUp from '../page/account/SignUp';
+import VerifyEmail from '../page/account/VerifyEmail';
+import Logout from '../page/account/Logout';
+import ForgotPassword from '../page/account/ForgotPassword';
+import ResetPassword from '../page/account/ResetPassword';
+
+// Dashboard Components
+import Dashboard from '../page/dashboard/Dashboard';
+
+// Notes Components
+import CollectionsPage from '../page/dashboard/notes/CollectionsPage';
+import NotesPage from '../page/dashboard/notes/NotesPage';
+
 // Placeholder components - replace with actual components
-const Dashboard = () => <div className="p-8">Dashboard Page</div>;
 const Universities = () => <div className="p-8">Universities Page</div>;
 const Scholarship = () => <div className="p-8">Scholarship Page</div>;
 const Learn = () => <div className="p-8">Learn Page</div>;
 const Profile = () => <div className="p-8">Profile Page</div>;
 const Settings = () => <div className="p-8">Settings Page</div>;
-const Login = () => <div className="p-8">Login Page</div>;
-const Register = () => <div className="p-8">Register Page</div>;
-const VerifyEmail = () => <div className="p-8">Verify Email Page</div>;
-const ForgotPassword = () => <div className="p-8">Forgot Password Page</div>;
-const ResetPassword = () => <div className="p-8">Reset Password Page</div>;
 const NotFound = () => <div className="p-8 text-center">404 - Page Not Found</div>;
 
 const MyRoutes = () => {
     const { isAuthenticated } = useAuth();
+
     return (
-        <div>
-            <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/verify-email" element={<VerifyEmail />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
+        <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<HomePage />} />
 
-                {/* Main App Routes */}
-                <Route
-                    path="/app"
-                    element={
-                        <div>
-                            <Outlet />
-                        </div>
-                    }
-                >
-                    {isAuthenticated ? (
-                        // Authenticated Routes
-                        <>
-                            <Route index element={<Dashboard />} />
-                            <Route path="dashboard" element={<Dashboard />} />
-                            <Route path="universities" element={<Universities />} />
-                            <Route path="scholarship" element={<Scholarship />} />
-                            <Route path="learn" element={<Learn />} />
-                            <Route path="profile" element={<Profile />} />
-                            <Route path="settings" element={<Settings />} />
-                        </>
-                    ) : (
-                        // Unauthenticated Routes
-                        <>
-                            <Route path="login" element={<Login />} />
-                            <Route path="register" element={<Register />} />
-                            <Route path="forgot-password" element={<ForgotPassword />} />
-                            <Route path="*" element={<NotFound />} />
-                        </>
-                    )}
-                </Route>
+            {/* Authentication Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/logout" element={<Logout />} />
 
-                {/* Direct Routes for easier navigation */}
-                <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Login />} />
-                <Route path="/universities" element={isAuthenticated ? <Universities /> : <Login />} />
-                <Route path="/scholarship" element={isAuthenticated ? <Scholarship /> : <Login />} />
-                <Route path="/learn" element={isAuthenticated ? <Learn /> : <Login />} />
-                <Route path="/profile" element={isAuthenticated ? <Profile /> : <Login />} />
-                <Route path="/settings" element={isAuthenticated ? <Settings /> : <Login />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
+            {/* Protected Routes */}
+            <Route
+                path="/dashboard"
+                element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" replace />}
+            />
 
-                {/* Catch all route */}
-                <Route path="*" element={<NotFound />} />
-            </Routes>
-        </div>
+            {/* Notes Routes */}
+            <Route
+                path="/dashboard/notes"
+                element={isAuthenticated ? <CollectionsPage /> : <Navigate to="/login" replace />}
+            />
+            <Route
+                path="/dashboard/notes/collection/:collectionId"
+                element={isAuthenticated ? <NotesPage /> : <Navigate to="/login" replace />}
+            />
+
+            <Route
+                path="/universities"
+                element={isAuthenticated ? <Universities /> : <Navigate to="/login" replace />}
+            />
+            <Route
+                path="/scholarship"
+                element={isAuthenticated ? <Scholarship /> : <Navigate to="/login" replace />}
+            />
+            <Route
+                path="/learn"
+                element={isAuthenticated ? <Learn /> : <Navigate to="/login" replace />}
+            />
+            <Route
+                path="/profile"
+                element={isAuthenticated ? <Profile /> : <Navigate to="/login" replace />}
+            />
+            <Route
+                path="/settings"
+                element={isAuthenticated ? <Settings /> : <Navigate to="/login" replace />}
+            />
+
+            {/* Catch all route */}
+            <Route path="*" element={<NotFound />} />
+        </Routes>
     );
 };
 

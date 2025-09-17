@@ -22,7 +22,7 @@ const NoteSchema = new mongoose.Schema(
     },
     content: {
       type: String,
-      required: [true, "Note content is required"],
+      // required: [true, "Note content is required"],
       trim: true,
     },
     tags: [

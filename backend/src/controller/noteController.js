@@ -50,9 +50,10 @@ export const getArchivedNotes = asyncHandler(async (req, res) => {
 export const createNote = asyncHandler(async (req, res) => {
   const { title, content, collectionId, tags, color, isPinned } = req.body;
 
-  if (!title || !content || !collectionId) {
+  // Allow empty string content; only require title and collectionId
+  if (!title || !collectionId) {
     res.status(400);
-    throw new Error("Please provide title, content and collection");
+    throw new Error("Please provide title and collection");
   }
 
   // Verify collection exists and belongs to user
@@ -70,7 +71,7 @@ export const createNote = asyncHandler(async (req, res) => {
     user: req.user._id,
     parentCollection: collectionId,
     title,
-    content,
+    content: content ?? "",
     tags,
     color,
     isPinned,
